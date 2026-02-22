@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Defense System v2.0</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header>
+            <div class="logo">
+                <span class="pulse"></span>
+                <h1>ACTIVE DEFENSE SYSTEM <span class="version">v2.0</span></h1>
+            </div>
+            <div class="header-right">
+                <div class="status-badge" id="connection-status">
+                    <span class="status-dot"></span> CONNECTED
+                </div>
+                <a href="/logout" class="logout-btn">🚪 Keluar</a>
+            </div>
+        </header>
+
+        <!-- STAT CARDS -->
+        <div class="stats-grid">
+            <div class="stat-card dns" id="dns-card">
+                <div class="card-icon">🌐</div>
+                <div class="card-info">
+                    <h3>DNS Alerts</h3>
+                    <p class="count" id="dns-count">0</p>
+                </div>
+            </div>
+            <div class="stat-card cookie" id="cookie-card">
+                <div class="card-icon">🍪</div>
+                <div class="card-info">
+                    <h3>Cookie Alerts</h3>
+                    <p class="count" id="cookie-count">0</p>
+                </div>
+            </div>
+            <div class="stat-card scan" id="scan-card">
+                <div class="card-icon">📡</div>
+                <div class="card-info">
+                    <h3>Scan Alerts</h3>
+                    <p class="count" id="scan-count">0</p>
+                </div>
+            </div>
+            <div class="stat-card file" id="file-card">
+                <div class="card-icon">📂</div>
+                <div class="card-info">
+                    <h3>File Alerts</h3>
+                    <p class="count" id="file-count">0</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- GRAFIK & KONTROL -->
+        <div class="controls-row">
+            <div class="filter-group">
+                <span class="filter-label">Filter:</span>
+                <button class="filter-btn active" data-type="all" onclick="filterFeed('all', this)">Semua</button>
+                <button class="filter-btn dns-btn" data-type="dns" onclick="filterFeed('dns', this)">DNS</button>
+                <button class="filter-btn cookie-btn" data-type="cookie"
+                    onclick="filterFeed('cookie', this)">Cookie</button>
+                <button class="filter-btn scan-btn" data-type="scan" onclick="filterFeed('scan', this)">Port
+                    Scan</button>
+                <button class="filter-btn file-btn" data-type="file" onclick="filterFeed('file', this)">File</button>
+            </div>
+            <div class="action-group">
+                <button class="action-btn" onclick="toggleTheme()">🌙 Dark / Light</button>
+                <a href="/api/export/csv" class="action-btn export-btn" download>📥 Export CSV</a>
+            </div>
+        </div>
+
+        <!-- GRAFIK (Aktivitas 24 Jam) -->
+        <div class="chart-section">
+            <h2>📊 Aktivitas Alert (24 Jam Terakhir)</h2>
+            <div class="chart-container">
+                <canvas id="hourlyChart"></canvas>
+            </div>
+        </div>
+
+        <!-- TABS: LIVE & RIWAYAT -->
+        <div class="feed-section">
+            <div class="tab-bar">
+                <button class="tab active" onclick="switchTab('live', this)">⚡ Live Feed</button>
+                <button class="tab" onclick="switchTab('history', this)">📋 Riwayat</button>
+            </div>
+
+            <!-- LIVE FEED -->
+            <div id="tab-live" class="feed-container" id="feed">
+                <div class="feed-item system">
+                    <span class="time">--:--:--</span>
+                    <span class="msg">Sistem diinisialisasi. Menunggu alert...</span>
+                </div>
+            </div>
+
+            <!-- RIWAYAT DARI DATABASE -->
+            <div id="tab-history" class="feed-container" style="display:none;">
+                <div id="history-content">
+                    <p class="loading-text">Memuat riwayat dari database...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

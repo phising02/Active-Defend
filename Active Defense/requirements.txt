@@ -1,0 +1,7 @@
+flask
+flask-socketio
+requests
+watchdog
+dnslib
+scapy
+python-dotenv

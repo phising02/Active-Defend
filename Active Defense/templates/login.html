@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Defense — Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0d1117;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .login-box {
+            background: linear-gradient(145deg, #161b22, #1c2128);
+            border: 1px solid #30363d;
+            border-radius: 16px;
+            padding: 48px 40px;
+            width: 380px;
+            box-shadow: 0 16px 64px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: #58a6ff;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: #8b949e;
+            font-size: 0.85rem;
+            margin-bottom: 32px;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+            background: #0d1117;
+            color: #e6edf3;
+            font-size: 1rem;
+            margin-bottom: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="password"]:focus {
+            border-color: #58a6ff;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background: linear-gradient(135deg, #1f6feb, #388bfd);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.85;
+        }
+
+        .error {
+            color: #f85149;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+        }
+
+        .shield {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-box">
+        <div class="shield">🛡️</div>
+        <div class="logo">ACTIVE DEFENSE</div>
+        <div class="subtitle">Sistem Pertahanan Aktif v2.0</div>
+        {% if error %}
+        <div class="error">⚠️ {{ error }}</div>
+        {% endif %}
+        <form method="POST">
+            <input type="password" name="password" placeholder="Masukkan password dashboard..." autofocus required>
+            <button type="submit">🔐 MASUK</button>
+        </form>
+    </div>
+</body>
+
+</html>
